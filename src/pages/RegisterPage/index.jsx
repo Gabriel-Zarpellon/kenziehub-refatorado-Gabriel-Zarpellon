@@ -2,15 +2,17 @@ import { useForm } from "react-hook-form";
 import { FormInput } from "../../components/FormInput";
 import { useDispatch } from "react-redux";
 import { userRegisterThunk } from "../../store/modules/user/thunks";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 export function RegisterPage() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   async function submit(formData) {
     if (formData.password == formData.password2) {
-      dispatch(userRegisterThunk(formData));
+      dispatch(userRegisterThunk(formData, navigate));
     } else {
       toast.error("As senhas não correspondem!");
     }
@@ -21,7 +23,7 @@ export function RegisterPage() {
       <div>
         <div>
           <img src="" alt="" />
-          <Link>
+          <Link to="/">
             <button>Voltar</button>
           </Link>
         </div>
@@ -73,7 +75,8 @@ export function RegisterPage() {
               placeholder="Opção de contato"
               register={register}
             />
-            <div className={styles.selectBox}>
+            {/* <div className={styles.selectBox}>  */}
+            <div>
               <label className="label" htmlFor="course_module">
                 Selecionar Módulo
               </label>
