@@ -1,15 +1,17 @@
 import { useForm } from "react-hook-form";
 import { FormInput } from "../../components/FormInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLoginThunk } from "../../store/modules/user/thunks";
+
 
 export function LoginPage() {
   let { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-async function submit(formData){
-    dispatch(userLoginThunk(formData));
+  async function submit(formData) {
+    dispatch(userLoginThunk(formData, navigate));
   }
   return (
     <section>
