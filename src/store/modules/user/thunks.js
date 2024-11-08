@@ -1,16 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import { api } from "../../../services/api";
-import { userLogin, userLogout } from "./actions";
+import { getUser, userLogin, userLogout, userRegister } from "./actions";
 import { toast } from "react-toastify";
 
-const navigate = useNavigate();
-
-export const userLoginThunk = (formData) => async (dispatch) => {
+export const userLoginThunk = (formData, navigate) => async (dispatch) => {
   try {
     let { data } = await api.post("/sessions", formData);
     dispatch(userLogin(data));
-    localStorage.setItem("@USERID", data.user.id);
     localStorage.setItem("@TOKEN", data.token);
+    localStorage.setItem("@USERID", data.user.id);
     navigate("/dashboard");
   } catch (error) {
     console.log(error);
@@ -18,17 +15,18 @@ export const userLoginThunk = (formData) => async (dispatch) => {
   }
 };
 
-export const userLogoutThunk = () => (dispatch) => {
+export const userLogoutThunk = (navigate) => (dispatch) => {
   localStorage.removeItem("@TOKEN");
   localStorage.removeItem("@USERID");
   dispatch(userLogout);
   navigate("/");
 };
 
-export const userRegisterThunk = async (formData) => {
+export const userRegisterThunk = (formData, navigate) => async (dispatch) => {
   try {
     await api.post("/users", formData);
-    toast.success("Cadastro efetuado com sucesso!");
+    dispatch(userRegister(formData));
+    //toast.success("Cadastro efetuado com sucesso!");
     navigate("/");
   } catch (error) {
     console.log(error);
@@ -36,6 +34,27 @@ export const userRegisterThunk = async (formData) => {
       toast.error("A senha deve conter no mínimo 6 caracteres!");
     } else {
       toast.error("E-mail já cadastrado!");
+    }
+  }
+};
+
+const userId = localStorage.getItem("@USERID");
+const token = localStorage.getItem("@TOKEN");
+
+export const getUserThunk = () => async (dispatch) => {
+  if (userId && token) {
+    try {
+      let { data } = await api.get(`/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });      
+
+      dispatch(getUser(data));
+    } catch (error) {
+      console.log(error);
+      // localStorage.removeItem("@TOKEN");
+      // localStorage.removeItem("@USERID");
     }
   }
 };
