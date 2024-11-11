@@ -23,7 +23,7 @@ export function DashboardPage() {
       dispatch(getTechsThunk());
     }
     loadTechs();
-  }, [techs]);
+  }, []);
 
   return (
     
