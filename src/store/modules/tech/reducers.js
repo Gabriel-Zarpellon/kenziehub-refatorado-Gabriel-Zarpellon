@@ -6,7 +6,7 @@ export const techReducer = (state = [], action) => {
       return action.techs;
 
     case ADD_TECH:
-      return [...state, tech];
+      return [...state, action.tech];
 
     case DELETE_TECH:
       return state.filter((tech) => tech.id != action.id);
