@@ -29,7 +29,6 @@ export const addTechThunk = (formData) => async (dispatch) => {
       },
     });
     dispatch(addTech(data));
-    //alert("Tecnologia adicionada!");
     toast.success("Tecnologia adicionada!");
   } catch (error) {
     console.log(error);
@@ -44,8 +43,7 @@ export const deleteTechThunk = (deleteId) => async (dispatch) => {
       },
     });
     dispatch(deleteTech(deleteId));
-    alert("Tecnologia excluída!");
-    //toast.success("Tecnologia excluída!");
+    toast.success("Tecnologia excluída!");
   } catch (error) {
     console.log(error);
   }
@@ -61,8 +59,7 @@ export const updateTechThunk = (editTech, formData) => async (dispatch) => {
     dispatch(updateTech(editTech));
     alert("Tecnologia atualizada!");
     dispatch(getTechsThunk());
-
-    //toast.success("Tecnologia atualizada!");
+    toast.success("Tecnologia atualizada!");
   } catch (error) {
     console.log(error);
   }

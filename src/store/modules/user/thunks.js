@@ -12,8 +12,7 @@ export const userLoginThunk = (formData, navigate) => async (dispatch) => {
     navigate("/dashboard");
   } catch (error) {
     console.log(error);
-    alert("E-mail ou senha incorretos!");
-    //toast.error("E-mail ou senha incorretos!");
+    toast.error("E-mail ou senha incorretos!");
   }
 };
 
@@ -28,17 +27,14 @@ export const userRegisterThunk = (formData, navigate) => async (dispatch) => {
   try {
     await api.post("/users", formData);
     dispatch(userRegister(formData));
-    alert("Cadastro efetuado com sucesso!");
-    //toast.success("Cadastro efetuado com sucesso!");
+    toast.success("Cadastro efetuado com sucesso!");
     navigate("/");
   } catch (error) {
     console.log(error);
     if (error.response.status == 400) {
-      alert("A senha deve conter no mínimo 6 caracteres!");
-      //toast.error("A senha deve conter no mínimo 6 caracteres!");
+      toast.error("A senha deve conter no mínimo 6 caracteres!");
     } else {
-      alert("E-mail já cadastrado!");
-      //toast.error("E-mail já cadastrado!");
+      toast.error("E-mail já cadastrado!");
     }
   }
 };
