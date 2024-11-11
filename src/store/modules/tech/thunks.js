@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { addTech, deleteTech, getTechs, updateTech } from "./actions";
+import { api } from "../../../services/api";
 
 const token = localStorage.getItem("@TOKEN");
 
@@ -28,21 +29,23 @@ export const addTechThunk = (formData) => async (dispatch) => {
       },
     });
     dispatch(addTech(data));
+    //alert("Tecnologia adicionada!");
     toast.success("Tecnologia adicionada!");
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteTechThunk = (deletingId) => async (dispatch) => {
+export const deleteTechThunk = (deleteId) => async (dispatch) => {
   try {
     await api.delete(`/users/techs/${deleteId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    dispatch(deleteTech(deletingId));
-    toast.success("Tecnologia excluída!");
+    dispatch(deleteTech(deleteId));
+    alert("Tecnologia excluída!");
+    //toast.success("Tecnologia excluída!");
   } catch (error) {
     console.log(error);
   }
@@ -56,7 +59,10 @@ export const updateTechThunk = (editTech, formData) => async (dispatch) => {
       },
     });
     dispatch(updateTech(editTech));
-    toast.success("Tecnologia atualizada!");
+    alert("Tecnologia atualizada!");
+    dispatch(getTechsThunk());
+
+    //toast.success("Tecnologia atualizada!");
   } catch (error) {
     console.log(error);
   }
