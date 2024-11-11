@@ -1,17 +1,17 @@
 import { ImPencil } from "react-icons/im";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { deleteTechThunk } from "../../../store/modules/tech/thunks";
+import styles from "./style.module.scss";
 
 export function TechCard({ tech, setEditTech }) {
   const dispatch = useDispatch();
   return (
-    <li>
-      <h3>{techReducer.title}</h3>
+    <li className={styles.cardBox}>
+      <h3 className="title3">{tech.title}</h3>
       <div>
-        <p>{tech.status}</p>
-        <div>
+        <p className="paragraph">{tech.status}</p>
+        <div className={styles.buttonBox}>
           <button onClick={() => setEditTech(tech)}>
             <ImPencil size={16} />
           </button>

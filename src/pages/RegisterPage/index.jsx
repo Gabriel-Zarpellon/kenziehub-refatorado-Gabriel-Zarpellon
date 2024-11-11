@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import { FormInput } from "../../components/FormInput";
 import { useDispatch } from "react-redux";
 import { userRegisterThunk } from "../../store/modules/user/thunks";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import styles from "./style.module.scss";
+import Logo from "../../assets/Logo.svg";
 
 export function RegisterPage() {
   const { register, handleSubmit } = useForm();
@@ -19,20 +21,20 @@ export function RegisterPage() {
   }
 
   return (
-    <section>
-      <div>
-        <div>
-          <img src="" alt="" />
+    <section className={styles.registerSection}>
+      <div className="container">
+        <div className={styles.logoBox}>
+          <img src={Logo} alt="KenzieHub Logo" />
           <Link to="/">
             <button>Voltar</button>
           </Link>
         </div>
-        <div>
-          <div>
-            <h1>Crie sua conta</h1>
-            <p>Rápido e grátis, vamos nessa</p>
+        <div className={styles.registerBox}>
+          <div className={styles.titleBox}>
+            <h1 className="title1">Crie sua conta</h1>
+            <p className="paragraph">Rápido e grátis, vamos nessa</p>
           </div>
-          <form onSubmit={handleSubmit(submit)}>
+          <form className={styles.formBox} onSubmit={handleSubmit(submit)}>
             <FormInput
               name="name"
               label="Nome"
@@ -75,12 +77,12 @@ export function RegisterPage() {
               placeholder="Opção de contato"
               register={register}
             />
-            {/* <div className={styles.selectBox}>  */}
-            <div>
+            <div className={styles.selectBox}>
               <label className="label" htmlFor="course_module">
                 Selecionar Módulo
               </label>
               <select
+                className="select"
                 name="course_module"
                 defaultValue={"Primeiro módulo (Introdução ao Frontend)"}
                 {...register("course_module")}
@@ -98,7 +100,9 @@ export function RegisterPage() {
                   Quarto módulo (Backend Avançado)
                 </option>
               </select>
-              <button type="submit">Cadastrar</button>
+              <button className="button pink" type="submit">
+                Cadastrar
+              </button>
             </div>
           </form>
         </div>

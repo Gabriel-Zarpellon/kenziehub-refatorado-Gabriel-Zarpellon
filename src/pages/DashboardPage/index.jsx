@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdAdd } from "react-icons/io";
-import { getUserThunk, userLogoutThunk } from "../../store/modules/user/thunks";
+import { userLogoutThunk } from "../../store/modules/user/thunks";
 import { TechList } from "../../components/TechList";
 import { useEffect, useState } from "react";
 import { AddTechModal } from "../../components/TechList/AddTechModal";
 import { EditTechModal } from "../../components/TechList/EditTechModal";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/Logo.svg";
+import styles from "./style.module.scss";
+import { getTechsThunk } from "../../store/modules/tech/thunks";
 
 export function DashboardPage() {
   const { user, techs } = useSelector((state) => state);
@@ -15,33 +18,40 @@ export function DashboardPage() {
   const [editTech, setEditTech] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    function loadTechs() {
+      dispatch(getTechsThunk());
+    }
+    loadTechs();
+  }, [techs]);
 
   return (
+    
     <>
       <header>
-        <div>
-          <img src="" alt="" />
+        <div className={`dashboardContainer ${styles.logoBox}`}>
+          <img src={Logo} alt="KenzieHub Logo" />
           <button onClick={() => dispatch(userLogoutThunk(navigate))}>
             Sair
           </button>
         </div>
       </header>
       <main>
-        <section>
-          <div>
-            <h1>{user?.name}</h1>
-            <p>{user?.course_module}</p>
+        <section className={styles.titleSection}>
+          <div className={`dashboardContainer ${styles.titleBox}`}>
+            <h1 className="title1">{user?.name}</h1>
+            <p className="paragraph">{user?.course_module}</p>
           </div>
         </section>
         <section>
-          <div>
-            <div>
-              <h2>Tecnologias</h2>
-              <button>
+          <div className="dashboardContainer">
+            <div className={styles.techTitle}>
+              <h2 className="title2">Tecnologias</h2>
+              <button onClick={() => setAddTechOpen(true)}>
                 <IoMdAdd size={20} />
               </button>
             </div>
-            <div>
+            <div className={styles.techListBox}>
               {techs?.length > 0 ? (
                 <TechList setEditTech={setEditTech} />
               ) : null}

@@ -3,6 +3,7 @@ import { Modal } from "../../Modal";
 import { FormInput } from "../../FormInput";
 import { useDispatch } from "react-redux";
 import { addTechThunk } from "../../../store/modules/tech/thunks";
+import styles from "./style.module.scss";
 
 export function AddTechModal({ setAddTechOpen }) {
   const { register, handleSubmit } = useForm();
@@ -14,8 +15,12 @@ export function AddTechModal({ setAddTechOpen }) {
   }
 
   return (
-    <Modal setIsOpen={setAddTechOpen} title="Cadastrar Tecnologia" value={false}>
-      <form onSubmit={handleSubmit(submit)}>
+    <Modal
+      setIsOpen={setAddTechOpen}
+      title="Cadastrar Tecnologia"
+      value={false}
+    >
+      <form onSubmit={handleSubmit(submit)} className={styles.formBox}>
         <FormInput
           name="title"
           label="Nome"
@@ -23,7 +28,7 @@ export function AddTechModal({ setAddTechOpen }) {
           placeholder="Tecnologia"
           register={register}
         />
-        <div>
+        <div className={styles.selectBox}>
           <label className="label" htmlFor="status">
             Selecionar Status
           </label>
@@ -38,7 +43,9 @@ export function AddTechModal({ setAddTechOpen }) {
             <option value="Avançado">Avançado</option>
           </select>
         </div>
-        <button type="submit">Cadastrar Tecnologia</button>
+        <button className="button pink" type="submit">
+          Cadastrar Tecnologia
+        </button>
       </form>
     </Modal>
   );
